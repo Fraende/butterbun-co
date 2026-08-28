@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Butterbun &amp; Co. — a family-owned neighbourhood burger house. Demo site concept.">
+<meta name="theme-color" content="#FFF7EC">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22%23FFF7EC%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%2210%22%20fill%3D%22%23F6B93B%22%20stroke%3D%22%234A2E23%22%20stroke-width%3D%222.5%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2212%22%20width%3D%2214%22%20height%3D%224%22%20rx%3D%222%22%20fill%3D%22%23E8553F%22%2F%3E%3C%2Fsvg%3E">
+<title>Butterbun &amp; Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+  :root{
+    --milk:#FFF7EC;
+    --milk-deep:#FBEBD6;
+    --paper:#FFFFFF;
+    --cocoa:#4A2E23;
+    --cocoa-soft:#8C6B58;
+    --tomato:#E8553F;
+    --tomato-deep:#C93F2C;
+    --honey:#F6B93B;
+    --pickle:#7BA05B;
+    --display:"Fredoka","Trebuchet MS",Verdana,sans-serif;
+    --body:"Nunito","Segoe UI",Helvetica,Arial,sans-serif;
+    --line:3px solid var(--cocoa);
+    --pop:5px 5px 0 var(--cocoa);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--milk);
+    color:var(--cocoa);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--honey);color:var(--cocoa)}
+  a{color:inherit}
+  img{max-width:100%;height:auto}
+
+  .wrap{max-width:1080px;margin:0 auto}
+  .section{padding:5rem 1.5rem}
+  section[id],header[id]{scroll-margin-top:5.5rem}
+  .eyebrow{
+    font-family:var(--display);font-weight:600;font-size:.85rem;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--tomato);
+  }
+  h2{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(2.1rem,4.5vw,3.2rem);
+    line-height:1.08;margin-top:.5rem;text-wrap:balance;
+  }
+  .lede{color:var(--cocoa-soft);max-width:34rem;margin-top:1rem;font-size:1.05rem}
+
+  /* scalloped edge, like a pie crust / awning */
+  .scallop{
+    height:22px;
+    background-image:radial-gradient(circle at 18px 22px,var(--milk) 18px,transparent 19px);
+    background-size:36px 22px;background-repeat:repeat-x;
+  }
+  .scallop-paper{
+    height:22px;
+    background-image:radial-gradient(circle at 18px 22px,var(--paper) 18px,transparent 19px);
+    background-size:36px 22px;background-repeat:repeat-x;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;inset:0 0 auto 0;z-index:60;
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    padding:.85rem 1.25rem;
+    background:var(--milk);
+    border-bottom:var(--line);
+  }
+  .logo{
+    display:flex;align-items:center;gap:.5rem;text-decoration:none;
+    font-family:var(--display);font-weight:700;font-size:1.3rem;letter-spacing:.01em;
+  }
+  .logo .dot{
+    width:22px;height:22px;border-radius:50%;
+    background:var(--honey);border:var(--line);
+    position:relative;flex:none;
+  }
+  .logo .dot::after{
+    content:"";position:absolute;inset:4px 3px auto 3px;height:5px;border-radius:6px;
+    background:var(--tomato);
+  }
+  .nav-links{display:flex;gap:1.5rem;list-style:none}
+  .nav-links a{
+    text-decoration:none;font-family:var(--display);font-weight:500;font-size:.95rem;
+    color:var(--cocoa);padding:.15rem 0;border-bottom:2px solid transparent;
+  }
+  .nav-links a:hover,.nav-links a:focus-visible{border-bottom-color:var(--tomato)}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--honey);outline-offset:2px}
+  .nav-right{display:flex;align-items:center;gap:.9rem}
+  .lang-switch{display:flex;gap:.2rem;background:var(--paper);border:var(--line);border-radius:999px;padding:.2rem}
+  .lang-switch button{
+    appearance:none;border:0;background:transparent;cursor:pointer;border-radius:999px;
+    font-family:var(--display);font-weight:600;font-size:.78rem;
+    color:var(--cocoa-soft);padding:.3rem .6rem;
+  }
+  .lang-switch button:hover{color:var(--cocoa)}
+  .lang-switch button[aria-pressed="true"]{background:var(--honey);color:var(--cocoa)}
+  .nav-cta{
+    font-family:var(--display);font-weight:600;font-size:.9rem;text-decoration:none;
+    color:var(--paper);background:var(--tomato);border:var(--line);border-radius:999px;
+    padding:.45rem 1.1rem;box-shadow:3px 3px 0 var(--cocoa);white-space:nowrap;
+  }
+  .nav-cta:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--cocoa)}
+  @media(max-width:880px){.nav-links{display:none}}
+  @media(max-width:460px){.nav-cta{display:none}}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    background:var(--milk-deep);
+    border-bottom:var(--line);
+    padding:8rem 1.5rem 0;
+    text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .hero-inner{max-width:900px;margin:0 auto}
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:.45rem;
+    background:var(--paper);border:var(--line);border-radius:999px;
+    padding:.35rem .95rem;font-family:var(--display);font-weight:600;font-size:.82rem;
+    box-shadow:3px 3px 0 var(--cocoa);
+  }
+  .hero-badge .pip{width:9px;height:9px;border-radius:50%;background:var(--pickle);flex:none}
+  .hero h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(2.6rem,7.5vw,5rem);
+    line-height:1.02;margin-top:1.1rem;text-wrap:balance;
+  }
+  .hero h1 em{font-style:normal;color:var(--tomato)}
+  .hero-sub{
+    margin:1.1rem auto 0;max-width:33rem;color:var(--cocoa-soft);font-size:1.08rem;
+  }
+  .hero-ctas{display:flex;gap:.85rem;margin-top:1.9rem;flex-wrap:wrap;justify-content:center}
+  .btn{
+    font-family:var(--display);font-weight:600;font-size:1rem;text-decoration:none;
+    border:var(--line);border-radius:999px;padding:.8rem 1.9rem;
+    box-shadow:var(--pop);transition:transform .12s ease,box-shadow .12s ease;
+    display:inline-block;
+  }
+  .btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--cocoa)}
+  .btn-tomato{background:var(--tomato);color:var(--paper)}
+  .btn-cream{background:var(--paper);color:var(--cocoa)}
+  .hero-art{
+    display:block;width:min(100%,780px);height:auto;aspect-ratio:16/9;
+    margin:2.5rem auto -3px;
+    animation:bob 7s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{
+    background:var(--honey);border-bottom:var(--line);
+    overflow:hidden;white-space:nowrap;padding:.6rem 0;
+  }
+  .marquee-track{display:inline-block;animation:slide 34s linear infinite}
+  .marquee span{
+    font-family:var(--display);font-weight:600;font-size:.95rem;
+    color:var(--cocoa);padding:0 1.1rem;
+  }
+  .marquee span b{color:var(--tomato-deep)}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){
+    .marquee-track,.hero-art{animation:none}
+    .btn,.card,.nav-cta{transition:none}
+    html{scroll-behavior:auto}
+  }
+
+  /* ---------- STACK ---------- */
+  .stack-section{background:var(--milk)}
+  .stack-grid{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:3.5rem;align-items:center;margin-top:2.5rem;
+  }
+  @media(max-width:900px){.stack-grid{grid-template-columns:1fr;gap:2.5rem}}
+  .burger-stack{display:flex;flex-direction:column;align-items:flex-start;gap:11px;padding:1rem 0;max-width:100%}
+  @media(max-width:1040px){.layer-label{display:none}.burger-stack{align-items:center}}
+  .layer{position:relative;transition:transform .2s ease}
+  .layer:hover{transform:translateX(7px) rotate(-1.5deg)}
+  .bun-top{
+    width:224px;height:80px;border-radius:112px 112px 20px 20px;
+    background:#F0B460;border:var(--line);border-bottom-width:0;
+    box-shadow:var(--pop);
+  }
+  .bun-top::after{
+    content:"";position:absolute;inset:20px 34px auto 34px;height:22px;
+    background:
+      radial-gradient(ellipse 5px 3px at 14% 45%,#FFF3DA 98%,transparent),
+      radial-gradient(ellipse 5px 3px at 38% 72%,#FFF3DA 98%,transparent),
+      radial-gradient(ellipse 5px 3px at 60% 34%,#FFF3DA 98%,transparent),
+      radial-gradient(ellipse 5px 3px at 84% 62%,#FFF3DA 98%,transparent);
+  }
+  .lettuce{
+    width:248px;height:26px;border-radius:14px;
+    background:var(--pickle);border:var(--line);
+  }
+  .tomato-slice{
+    width:236px;height:24px;border-radius:14px;
+    background:var(--tomato);border:var(--line);
+  }
+  .cheese{
+    width:242px;height:26px;border-radius:8px;
+    background:var(--honey);border:var(--line);
+  }
+  .patty{
+    width:238px;height:42px;border-radius:22px;
+    background:#8A5A3B;border:var(--line);
+    box-shadow:var(--pop);
+  }
+  .bun-bottom{
+    width:230px;height:38px;border-radius:14px 14px 60px 60px;
+    background:#E3A455;border:var(--line);border-top-width:0;
+    box-shadow:var(--pop);
+  }
+  .layer-label{
+    position:absolute;left:calc(100% + 1.5rem);top:50%;transform:translateY(-50%);
+    white-space:nowrap;font-family:var(--display);font-weight:500;
+    font-size:.88rem;color:var(--cocoa-soft);
+  }
+  .layer-label::before{
+    content:"";position:absolute;right:100%;top:50%;width:1rem;height:2px;
+    background:var(--cocoa-soft);margin-right:.4rem;border-radius:2px;
+  }
+  @media(max-width:560px){.layer-label{display:none}}
+  .stack-copy p+p{margin-top:.9rem;color:var(--cocoa-soft)}
+  .stack-stats{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+  .stat{
+    background:var(--paper);border:var(--line);border-radius:16px;
+    padding:.9rem 1.1rem;box-shadow:3px 3px 0 var(--cocoa);flex:1 1 8rem;
+  }
+  .stat b{
+    display:block;font-family:var(--display);font-weight:700;font-size:1.7rem;
+    line-height:1.1;color:var(--tomato);font-variant-numeric:tabular-nums;
+  }
+  .stat span{font-size:.82rem;color:var(--cocoa-soft);line-height:1.35;display:block;margin-top:.15rem}
+
+  /* ---------- MENU ---------- */
+  .menu-section{background:var(--milk-deep);border-top:var(--line);border-bottom:var(--line)}
+  .menu-head{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+  .menu-note{
+    color:var(--cocoa-soft);font-size:.95rem;max-width:23rem;
+    background:var(--paper);border:var(--line);border-radius:16px;padding:.85rem 1.1rem;
+    box-shadow:3px 3px 0 var(--cocoa);
+  }
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem;margin-top:2.5rem}
+  .card{
+    background:var(--paper);border:var(--line);border-radius:22px;
+    display:flex;flex-direction:column;overflow:hidden;
+    box-shadow:var(--pop);transition:transform .15s ease,box-shadow .15s ease;
+  }
+  .card:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--cocoa)}
+  .card-figure{position:relative;display:block;background:var(--milk);border-bottom:var(--line)}
+  .card-img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+  .card-body{padding:1.25rem 1.35rem 1.4rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+  .card-top{display:flex;justify-content:space-between;align-items:baseline;gap:.8rem}
+  .card h3{font-family:var(--display);font-weight:600;font-size:1.3rem;line-height:1.15}
+  .price{
+    font-family:var(--display);font-weight:700;font-size:1.15rem;color:var(--tomato);
+    font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .card p{color:var(--cocoa-soft);font-size:.94rem;line-height:1.55}
+  .tag{
+    align-self:flex-start;margin-top:auto;
+    font-family:var(--display);font-weight:600;font-size:.75rem;
+    color:var(--cocoa);background:var(--milk-deep);
+    border:2px solid var(--cocoa);border-radius:999px;padding:.22rem .7rem;
+  }
+  .tag.green{background:#DDEBCE}
+  .tag.kid{background:#FDE3C8}
+  .subhead{
+    margin-top:3.5rem;font-family:var(--display);font-weight:700;
+    font-size:1.5rem;display:flex;align-items:center;gap:.9rem;
+  }
+  .subhead::after{content:"";flex:1;height:3px;background:var(--cocoa);border-radius:3px;opacity:.25}
+  .side-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:.2rem 2.4rem;margin-top:1.2rem;list-style:none}
+  .side-list li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:.75rem;
+    padding:.6rem 0;border-bottom:2px dotted rgba(74,46,35,.28);
+  }
+  .side-list .name{font-weight:700}
+  .side-list .desc{color:var(--cocoa-soft);font-size:.85rem;display:block;font-weight:400}
+  .side-list .price{font-size:1.02rem}
+
+  /* ---------- STORY ---------- */
+  .story-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3.5rem;align-items:center}
+  @media(max-width:900px){.story-grid{grid-template-columns:1fr;gap:2.2rem}}
+  .story-copy p+p{margin-top:.9rem;color:var(--cocoa-soft)}
+  .big-quote{
+    font-family:var(--display);font-weight:600;
+    font-size:clamp(1.35rem,2.6vw,1.75rem);line-height:1.28;color:var(--cocoa);
+    background:var(--honey);border:var(--line);border-radius:20px;
+    padding:1.1rem 1.3rem;margin:1.6rem 0 .8rem;box-shadow:var(--pop);
+  }
+  .story-attr{font-weight:700}
+  .polaroid{
+    background:var(--paper);border:var(--line);border-radius:20px;
+    padding:1rem 1rem 1.3rem;box-shadow:var(--pop);transform:rotate(-1.5deg);
+  }
+  .polaroid .frame{
+    border:var(--line);border-radius:14px;overflow:hidden;background:var(--milk-deep);
+    aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+  }
+  .polaroid .frame svg{width:100%;height:100%;display:block}
+  .polaroid figcaption{
+    font-family:var(--display);font-weight:500;font-size:.92rem;
+    color:var(--cocoa-soft);text-align:center;margin-top:.9rem;
+  }
+
+  /* ---------- VISIT ---------- */
+  .visit-section{background:var(--milk-deep);border-top:var(--line)}
+  .visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:2.5rem}
+  @media(max-width:820px){.visit-grid{grid-template-columns:1fr;gap:2rem}}
+  .panel{
+    background:var(--paper);border:var(--line);border-radius:22px;
+    padding:1.5rem 1.6rem;box-shadow:var(--pop);
+  }
+  .hours-table{width:100%;border-collapse:collapse}
+  .hours-table td{
+    padding:.6rem 0;border-bottom:2px dotted rgba(74,46,35,.25);
+    font-variant-numeric:tabular-nums;
+  }
+  .hours-table tr:last-child td{border-bottom:0}
+  .hours-table td:first-child{font-family:var(--display);font-weight:500;font-size:.95rem;color:var(--cocoa-soft)}
+  .hours-table td:last-child{text-align:right;font-weight:700}
+  .hours-table .highlight td{color:var(--tomato)}
+  .addr{font-style:normal;line-height:1.85;color:var(--cocoa-soft)}
+  .addr b{
+    display:block;color:var(--cocoa);font-family:var(--display);
+    font-weight:700;font-size:1.2rem;margin-bottom:.3rem;
+  }
+  .addr a{color:var(--tomato);font-weight:700;text-decoration:none;border-bottom:2px solid rgba(232,85,63,.35)}
+  .perks{list-style:none;margin-top:1.1rem;display:flex;flex-direction:column;gap:.5rem}
+  .perks li{display:flex;gap:.6rem;align-items:flex-start;font-size:.94rem;color:var(--cocoa-soft)}
+  .perks .check{
+    flex:none;width:20px;height:20px;border-radius:50%;background:var(--pickle);
+    border:2px solid var(--cocoa);margin-top:.15rem;
+  }
+
+  /* ---------- CTA / FOOTER ---------- */
+  .cta-section{
+    background:var(--tomato);border-top:var(--line);
+    text-align:center;padding:4.5rem 1.5rem 5rem;color:var(--paper);
+  }
+  .cta-section .eyebrow{color:var(--milk-deep)}
+  .cta-section h2{color:var(--paper)}
+  .cta-section .btn-cream{background:var(--paper);color:var(--cocoa)}
+  .cta-section .btn-honey{background:var(--honey);color:var(--cocoa)}
+  footer{
+    background:var(--milk);border-top:var(--line);
+    display:flex;justify-content:space-between;align-items:center;gap:1.2rem;flex-wrap:wrap;
+    padding:1.4rem 1.5rem;color:var(--cocoa-soft);font-size:.85rem;
+  }
+  footer .foot-links{display:flex;gap:1.3rem;list-style:none}
+  footer a{color:var(--cocoa-soft);text-decoration:none}
+  footer a:hover{color:var(--tomato)}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#top"><span class="dot"></span>Butterbun &amp; Co.</a>
+  <ul class="nav-links">
+    <li><a href="#menu" data-i18n="nav.menu">Menu</a></li>
+    <li><a href="#stack" data-i18n="nav.stack">How we build it</a></li>
+    <li><a href="#story" data-i18n="nav.story">Our story</a></li>
+    <li><a href="#visit" data-i18n="nav.visit">Visit</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="fi" aria-pressed="false">FI</button>
+      <button type="button" data-lang="sv" aria-pressed="false">SV</button>
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+    </div>
+    <a class="nav-cta" href="#order" data-i18n="cta.order">Order ahead</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <p class="hero-badge"><span class="pip"></span><span data-i18n="hero.badge">Family owned since 1998</span></p>
+    <h1><span data-i18n="hero.l1">Pull up a chair,</span> <em data-i18n="hero.l2">everyone fits</em></h1>
+    <p class="hero-sub" data-i18n="hero.sub">Neighbourhood burgers on buttery toasted buns, crayons on every table, and second helpings nobody keeps track of.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-tomato" href="#order" data-i18n="cta.order">Order ahead</a>
+      <a class="btn btn-cream" href="#menu" data-i18n="cta.menu">Peek at the menu</a>
+    </div>
+    <img class="hero-art" width="800" height="450" src="img/c7.webp" alt="" data-i18n-alt="hero.alt" decoding="async">
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span><span data-i18n="mq.1">Buns baked every morning</span> <b>&#9679;</b></span><span><span data-i18n="mq.2">Kids eat free on Sundays</span> <b>&#9679;</b></span><span><span data-i18n="mq.3">High chairs &amp; crayons ready</span> <b>&#9679;</b></span><span><span data-i18n="mq.4">Milkshakes spun by hand</span> <b>&#9679;</b></span><span><span data-i18n="mq.5">Refills are on us</span> <b>&#9679;</b></span>
+    <span><span data-i18n="mq.1">Buns baked every morning</span> <b>&#9679;</b></span><span><span data-i18n="mq.2">Kids eat free on Sundays</span> <b>&#9679;</b></span><span><span data-i18n="mq.3">High chairs &amp; crayons ready</span> <b>&#9679;</b></span><span><span data-i18n="mq.4">Milkshakes spun by hand</span> <b>&#9679;</b></span><span><span data-i18n="mq.5">Refills are on us</span> <b>&#9679;</b></span>
+  </div>
+</div>
+
+<section class="section stack-section" id="stack">
+  <div class="wrap">
+    <p class="eyebrow" data-i18n="stack.eyebrow">How we build it</p>
+    <h2 data-i18n="stack.h2">Six happy layers</h2>
+    <div class="stack-grid">
+      <div class="burger-stack" id="burger-diagram" role="img" aria-label="Diagram of the Butterbun house burger: buttery toasted bun top, crisp lettuce, garden tomato, melty cheddar, house patty, toasted bun base">
+        <div class="layer"><div class="bun-top"></div><span class="layer-label" data-i18n="stack.crown">Buttery bun top</span></div>
+        <div class="layer"><div class="lettuce"></div><span class="layer-label" data-i18n="stack.lettuce">Crisp lettuce</span></div>
+        <div class="layer"><div class="tomato-slice"></div><span class="layer-label" data-i18n="stack.tomato">Garden tomato</span></div>
+        <div class="layer"><div class="cheese"></div><span class="layer-label" data-i18n="stack.cheese">Melty cheddar</span></div>
+        <div class="layer"><div class="patty"></div><span class="layer-label" data-i18n="stack.patty">Our house patty</span></div>
+        <div class="layer"><div class="bun-bottom"></div><span class="layer-label" data-i18n="stack.heel">Toasted, buttered base</span></div>
+      </div>
+      <div class="stack-copy">
+        <p data-i18n="stack.p1">Nothing complicated, just done properly. The buns come out of the oven at seven, the patties are pressed by hand, and the cheese goes on early so it has time to melt all the way to the edges.</p>
+        <p data-i18n="stack.p2">Tell us what your little one does and doesn't like and we will happily rebuild the whole thing. No pickles, extra cheese, cut in half — none of it is a problem.</p>
+        <div class="stack-stats">
+          <div class="stat"><b>1998</b><span data-i18n="stack.s1">Family owned since</span></div>
+          <div class="stat"><b>12</b><span data-i18n="stack.s2">Booths with crayons</span></div>
+          <div class="stat"><b>7am</b><span data-i18n="stack.s3">The buns come out</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section menu-section" id="menu">
+  <div class="wrap">
+    <div class="menu-head">
+      <div>
+        <p class="eyebrow" data-i18n="menu.eyebrow">On the board</p>
+        <h2 data-i18n="menu.h2">Menu</h2>
+      </div>
+      <p class="menu-note" data-i18n="menu.note">Every burger can be made smaller, milder or cut in half. Just ask — we do it a hundred times a day.</p>
+    </div>
+
+    <div class="menu-grid">
+      <article class="card">
+        <figure class="card-figure">
+          <img class="card-img" src="img/c1.webp" width="480" height="360" alt="" data-i18n-alt="menu.a1" decoding="async">
+        </figure>
+        <div class="card-body">
+          <div class="card-top"><h3>The Butterbun</h3><span class="price">$12</span></div>
+          <p data-i18n="menu.d1">Our everyday classic. One hand-pressed patty, melty cheddar, lettuce, tomato and a soft buttered bun.</p>
+          <span class="tag" data-i18n="menu.t1">House favourite</span>
+        </div>
+      </article>
+      <article class="card">
+        <figure class="card-figure">
+          <img class="card-img" src="img/c2.webp" width="480" height="360" alt="" data-i18n-alt="menu.a2" decoding="async">
+        </figure>
+        <div class="card-body">
+          <div class="card-top"><h3>Double Trouble</h3><span class="price">$15</span></div>
+          <p data-i18n="menu.d2">Two patties, two slices of cheese and a few strips of bacon. Comes with extra napkins and zero judgement.</p>
+          <span class="tag" data-i18n="menu.t2">Big appetites</span>
+        </div>
+      </article>
+      <article class="card">
+        <figure class="card-figure">
+          <img class="card-img" src="img/c3.webp" width="480" height="360" alt="" data-i18n-alt="menu.a3" decoding="async">
+        </figure>
+        <div class="card-body">
+          <div class="card-top"><h3>Sunny Chicken</h3><span class="price">$13</span></div>
+          <p data-i18n="menu.d3">Crispy buttermilk chicken with honey mustard and a couple of pickles. Gentle on the spice, big on the crunch.</p>
+          <span class="tag" data-i18n="menu.t3">Mild &amp; crunchy</span>
+        </div>
+      </article>
+      <article class="card">
+        <figure class="card-figure">
+          <img class="card-img" src="img/c4.webp" width="480" height="360" alt="" data-i18n-alt="menu.a4" decoding="async">
+        </figure>
+        <div class="card-body">
+          <div class="card-top"><h3>Garden Patch</h3><span class="price">$12</span></div>
+          <p data-i18n="menu.d4">A chunky veg and bean patty with avocado, sprouts and tomato. Bright, fresh and properly filling.</p>
+          <span class="tag green" data-i18n="menu.t4">Vegetarian</span>
+        </div>
+      </article>
+      <article class="card">
+        <figure class="card-figure">
+          <img class="card-img" src="img/c5.webp" width="480" height="360" alt="" data-i18n-alt="menu.a5" decoding="async">
+        </figure>
+        <div class="card-body">
+          <div class="card-top"><h3>Little Buns</h3><span class="price">$7</span></div>
+          <p data-i18n="menu.d5">A small burger sized for small hands, with potato smiles on the side. Free with any adult meal on Sundays.</p>
+          <span class="tag kid" data-i18n="menu.t5">For little hands</span>
+        </div>
+      </article>
+      <article class="card">
+        <figure class="card-figure">
+          <img class="card-img" src="img/c6.webp" width="480" height="360" alt="" data-i18n-alt="menu.a6" decoding="async">
+        </figure>
+        <div class="card-body">
+          <div class="card-top"><h3>Pancake Sunrise</h3><span class="price">$13</span></div>
+          <p data-i18n="menu.d6">Fluffy pancakes instead of a bun, a fried egg, bacon and a little maple syrup. Served until noon.</p>
+          <span class="tag" data-i18n="menu.t6">Weekend mornings</span>
+        </div>
+      </article>
+    </div>
+
+    <h3 class="subhead" data-i18n="menu.sides">Sides &amp; little extras</h3>
+    <ul class="side-list">
+      <li><span class="name"><span data-i18n="side.n1">Curly fries</span><span class="desc" data-i18n="side.d1">with a pot of garlic dip</span></span><span class="price">$5</span></li>
+      <li><span class="name"><span data-i18n="side.n2">Potato smiles</span><span class="desc" data-i18n="side.d2">the ones with faces</span></span><span class="price">$4</span></li>
+      <li><span class="name"><span data-i18n="side.n3">Corn on the cob</span><span class="desc" data-i18n="side.d3">buttered, off the grill</span></span><span class="price">$4</span></li>
+      <li><span class="name"><span data-i18n="side.n4">Mac &amp; cheese cup</span><span class="desc" data-i18n="side.d4">baked, with a crumb top</span></span><span class="price">$6</span></li>
+      <li><span class="name"><span data-i18n="side.n5">Apple &amp; carrot sticks</span><span class="desc" data-i18n="side.d5">for the small table</span></span><span class="price">$3</span></li>
+      <li><span class="name"><span data-i18n="side.n6">Garden salad</span><span class="desc" data-i18n="side.d6">lemon and olive oil</span></span><span class="price">$5</span></li>
+    </ul>
+
+    <h3 class="subhead" data-i18n="menu.shakes">Milkshakes</h3>
+    <ul class="side-list">
+      <li><span class="name"><span data-i18n="shake.n1">Strawberry patch</span><span class="desc" data-i18n="shake.d1">real berries, whipped top</span></span><span class="price">$6</span></li>
+      <li><span class="name"><span data-i18n="shake.n2">Vanilla cloud</span><span class="desc" data-i18n="shake.d2">thick enough for a spoon</span></span><span class="price">$6</span></li>
+      <li><span class="name"><span data-i18n="shake.n3">Chocolate malt</span><span class="desc" data-i18n="shake.d3">the old-fashioned way</span></span><span class="price">$6</span></li>
+      <li><span class="name"><span data-i18n="shake.n4">Banana split shake</span><span class="desc" data-i18n="shake.d4">two straws, always</span></span><span class="price">$7</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="story">
+  <div class="wrap">
+    <div class="story-grid">
+      <div class="story-copy">
+        <p class="eyebrow" data-i18n="story.eyebrow">Our story</p>
+        <h2 data-i18n-html="story.h2">It started at<br>a kitchen table</h2>
+        <p class="lede" data-i18n="story.lede">Marta cooked for a full house every Sunday and never once let anyone leave hungry. The burger on our menu is more or less hers, give or take a spoonful.</p>
+        <p data-i18n="story.p1">In 1998 the family opened a small room on Founders Yard with eight tables and a very loud milkshake machine. We have added four tables since. The machine is still loud, and the same recipe card is still taped inside the kitchen cupboard.</p>
+        <p class="big-quote" data-i18n="story.quote">Everybody leaves a little fuller than they arrived.</p>
+        <p class="story-attr" data-i18n="story.attr">— Marta &amp; Otto Kivi, second generation</p>
+      </div>
+      <figure class="polaroid">
+        <div class="frame">
+          <svg viewBox="0 0 400 400" role="img" aria-hidden="true" focusable="false">
+            <defs>
+              <pattern id="bbCheck" width="34" height="34" patternUnits="userSpaceOnUse">
+                <rect width="34" height="34" fill="#FBEBD6"/>
+                <rect width="17" height="17" fill="#F6DCC0"/>
+                <rect x="17" y="17" width="17" height="17" fill="#F6DCC0"/>
+              </pattern>
+              <g id="bbBurger">
+                <circle r="42" fill="#FFF7EC" stroke="#4A2E23" stroke-width="5"/>
+                <circle r="30" fill="#F2B45C" stroke="#4A2E23" stroke-width="5"/>
+                <path d="M-27 4a27 27 0 0 0 54 0z" fill="#E8A03F" stroke="#4A2E23" stroke-width="5" stroke-linejoin="round"/>
+                <circle cx="-11" cy="-13" r="2.6" fill="#FFF3DE"/>
+                <circle cx="3" cy="-18" r="2.6" fill="#FFF3DE"/>
+                <circle cx="14" cy="-8" r="2.6" fill="#FFF3DE"/>
+                <circle cx="-4" cy="-4" r="2.6" fill="#FFF3DE"/>
+              </g>
+            </defs>
+            <rect width="400" height="400" fill="url(#bbCheck)"/>
+            <circle cx="200" cy="205" r="150" fill="#C98A55" stroke="#4A2E23" stroke-width="7"/>
+            <circle cx="200" cy="205" r="132" fill="#D89C67" stroke="#4A2E23" stroke-width="4"/>
+            <g transform="translate(133,163)"><use href="#bbBurger"/></g>
+            <g transform="translate(266,178)"><use href="#bbBurger"/></g>
+            <g transform="translate(150,285)">
+              <g stroke="#4A2E23" stroke-width="4.5" stroke-linecap="round">
+                <path d="M-14-26v22" stroke="#F6B93B"/><path d="M-4-31v26" stroke="#F6B93B"/>
+                <path d="M7-28v23" stroke="#F6B93B"/><path d="M16-22v17" stroke="#F6B93B"/>
+              </g>
+              <path d="M-26-6h52l-7 30h-38z" fill="#E8553F" stroke="#4A2E23" stroke-width="5" stroke-linejoin="round"/>
+            </g>
+            <g transform="translate(258,286)">
+              <path d="M-13-46l4-14h20l4 14z" fill="#7BA05B" stroke="#4A2E23" stroke-width="4.5" stroke-linejoin="round"/>
+              <path d="M-18-40h36l-6 52h-24z" fill="#FFF7EC" stroke="#4A2E23" stroke-width="5" stroke-linejoin="round"/>
+              <path d="M-15-24h30" stroke="#F6B93B" stroke-width="7" stroke-linecap="round"/>
+              <circle cx="0" cy="-50" r="8" fill="#E8553F" stroke="#4A2E23" stroke-width="4.5"/>
+            </g>
+            <g transform="translate(200,110)">
+              <path d="M0-16v14" stroke="#7BA05B" stroke-width="4.5" stroke-linecap="round"/>
+              <circle cx="-11" cy="-22" r="8" fill="#F6B93B" stroke="#4A2E23" stroke-width="4"/>
+              <circle cx="11" cy="-25" r="8" fill="#E8553F" stroke="#4A2E23" stroke-width="4"/>
+              <path d="M-11-2h22l-4 22h-14z" fill="#FFF7EC" stroke="#4A2E23" stroke-width="5" stroke-linejoin="round"/>
+            </g>
+          </svg>
+        </div>
+        <figcaption data-i18n="story.caption">The corner booth, most Sunday afternoons</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="section visit-section" id="visit">
+  <div class="wrap">
+    <p class="eyebrow" data-i18n="visit.eyebrow">Come by</p>
+    <h2 data-i18n="visit.h2">Opening hours &amp; the address</h2>
+    <div class="visit-grid">
+      <div class="panel">
+        <table class="hours-table">
+          <tbody>
+            <tr><td data-i18n="visit.monthu">Mon – Thu</td><td>11:00 – 21:00</td></tr>
+            <tr><td data-i18n="visit.fri">Fri</td><td>11:00 – 22:00</td></tr>
+            <tr><td data-i18n="visit.sat">Sat</td><td>09:00 – 22:00</td></tr>
+            <tr class="highlight"><td data-i18n="visit.sun">Sun</td><td data-i18n="visit.sunh">09:00 – 20:00 · kids eat free</td></tr>
+            <tr><td data-i18n="visit.brunch">Pancake mornings</td><td data-i18n="visit.brunchh">Sat &amp; Sun till noon</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <address class="addr">
+          <b>Butterbun &amp; Co.</b>
+          <span data-i18n="visit.addr1">48 Founders Yard, Old Market District</span><br>
+          <span data-i18n="visit.addr2">Demo City, DC 00048</span><br>
+          <a href="tel:+15550100048">(555) 010-0048</a> ·
+          <a href="mailto:hello@butterbun.example">hello@butterbun.example</a>
+        </address>
+        <ul class="perks">
+          <li><span class="check"></span><span data-i18n="visit.p1">High chairs, booster seats and room for the pram</span></li>
+          <li><span class="check"></span><span data-i18n="visit.p2">Crayons and a colouring mat at every table</span></li>
+          <li><span class="check"></span><span data-i18n="visit.p3">Big tables for birthdays — just call ahead</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="order">
+  <p class="eyebrow" data-i18n="cta.eyebrow">Hungry already?</p>
+  <h2 data-i18n-html="cta.h2">We saved you<br>a seat</h2>
+  <div class="hero-ctas">
+    <a class="btn btn-cream" href="#top" data-i18n="cta.pickup">Order for pickup</a>
+    <a class="btn btn-honey" href="#top" data-i18n="cta.book">Book a table</a>
+  </div>
+</section>
+
+<footer>
+  <span data-i18n="foot.legal">© 2026 Butterbun &amp; Co. — fictional brand.</span>
+  <ul class="foot-links">
+    <li><a href="#menu" data-i18n="nav.menu">Menu</a></li>
+    <li><a href="#visit" data-i18n="nav.visit">Visit</a></li>
+    <li><a href="#top" data-i18n="foot.top">Top</a></li>
+  </ul>
+  <span data-i18n="foot.note">Demo site concept · built by Frans</span>
+</footer>
+
+<script>
+(function(){
+  var I18N = {
+    en: {
+      "nav.menu":"Menu","nav.stack":"How we build it","nav.story":"Our story","nav.visit":"Visit",
+      "cta.order":"Order ahead","cta.menu":"Peek at the menu",
+      "hero.badge":"Family owned since 1998",
+      "hero.l1":"Pull up a chair,","hero.l2":"everyone fits",
+      "hero.sub":"Neighbourhood burgers on buttery toasted buns, crayons on every table, and second helpings nobody keeps track of.",
+      "hero.alt":"Cartoon overhead view of a family table with burgers, baskets of fries and milkshakes on a checked tablecloth",
+      "mq.1":"Buns baked every morning","mq.2":"Kids eat free on Sundays","mq.3":"High chairs & crayons ready","mq.4":"Milkshakes spun by hand","mq.5":"Refills are on us",
+      "stack.eyebrow":"How we build it","stack.h2":"Six happy layers",
+      "stack.crown":"Buttery bun top","stack.lettuce":"Crisp lettuce","stack.tomato":"Garden tomato","stack.cheese":"Melty cheddar","stack.patty":"Our house patty","stack.heel":"Toasted, buttered base",
+      "stack.p1":"Nothing complicated, just done properly. The buns come out of the oven at seven, the patties are pressed by hand, and the cheese goes on early so it has time to melt all the way to the edges.",
+      "stack.p2":"Tell us what your little one does and doesn't like and we will happily rebuild the whole thing. No pickles, extra cheese, cut in half — none of it is a problem.",
+      "stack.s1":"Family owned since","stack.s2":"Booths with crayons","stack.s3":"The buns come out",
+      "stack.aria":"Diagram of the Butterbun house burger: buttery toasted bun top, crisp lettuce, garden tomato, melty cheddar, house patty, toasted bun base",
+      "menu.eyebrow":"On the board","menu.h2":"Menu",
+      "menu.note":"Every burger can be made smaller, milder or cut in half. Just ask — we do it a hundred times a day.",
+      "menu.d1":"Our everyday classic. One hand-pressed patty, melty cheddar, lettuce, tomato and a soft buttered bun.","menu.t1":"House favourite",
+      "menu.d2":"Two patties, two slices of cheese and a few strips of bacon. Comes with extra napkins and zero judgement.","menu.t2":"Big appetites",
+      "menu.d3":"Crispy buttermilk chicken with honey mustard and a couple of pickles. Gentle on the spice, big on the crunch.","menu.t3":"Mild & crunchy",
+      "menu.d4":"A chunky veg and bean patty with avocado, sprouts and tomato. Bright, fresh and properly filling.","menu.t4":"Vegetarian",
+      "menu.d5":"A small burger sized for small hands, with potato smiles on the side. Free with any adult meal on Sundays.","menu.t5":"For little hands",
+      "menu.d6":"Fluffy pancakes instead of a bun, a fried egg, bacon and a little maple syrup. Served until noon.","menu.t6":"Weekend mornings",
+      "menu.a1":"Cartoon drawing of a classic cheeseburger with melting butter on the bun",
+      "menu.a2":"Cartoon drawing of a tall double cheeseburger with bacon",
+      "menu.a3":"Cartoon drawing of a crispy chicken burger with honey mustard",
+      "menu.a4":"Cartoon drawing of a colourful veggie burger with avocado and sprouts",
+      "menu.a5":"Cartoon drawing of a tiny kids cheeseburger with little potato bites",
+      "menu.a6":"Cartoon drawing of a breakfast burger with pancake buns and a fried egg",
+      "menu.sides":"Sides & little extras","menu.shakes":"Milkshakes",
+      "side.n1":"Curly fries","side.d1":"with a pot of garlic dip",
+      "side.n2":"Potato smiles","side.d2":"the ones with faces",
+      "side.n3":"Corn on the cob","side.d3":"buttered, off the grill",
+      "side.n4":"Mac & cheese cup","side.d4":"baked, with a crumb top",
+      "side.n5":"Apple & carrot sticks","side.d5":"for the small table",
+      "side.n6":"Garden salad","side.d6":"lemon and olive oil",
+      "shake.n1":"Strawberry patch","shake.d1":"real berries, whipped top",
+      "shake.n2":"Vanilla cloud","shake.d2":"thick enough for a spoon",
+      "shake.n3":"Chocolate malt","shake.d3":"the old-fashioned way",
+      "shake.n4":"Banana split shake","shake.d4":"two straws, always",
+      "story.eyebrow":"Our story","story.h2":"It started at<br>a kitchen table",
+      "story.lede":"Marta cooked for a full house every Sunday and never once let anyone leave hungry. The burger on our menu is more or less hers, give or take a spoonful.",
+      "story.p1":"In 1998 the family opened a small room on Founders Yard with eight tables and a very loud milkshake machine. We have added four tables since. The machine is still loud, and the same recipe card is still taped inside the kitchen cupboard.",
+      "story.quote":"Everybody leaves a little fuller than they arrived.",
+      "story.attr":"— Marta & Otto Kivi, second generation",
+      "story.caption":"The corner booth, most Sunday afternoons",
+      "visit.eyebrow":"Come by","visit.h2":"Opening hours & the address",
+      "visit.monthu":"Mon – Thu","visit.fri":"Fri","visit.sat":"Sat","visit.sun":"Sun",
+      "visit.sunh":"09:00 – 20:00 · kids eat free",
+      "visit.brunch":"Pancake mornings","visit.brunchh":"Sat & Sun till noon",
+      "visit.addr1":"48 Founders Yard, Old Market District","visit.addr2":"Demo City, DC 00048",
+      "visit.p1":"High chairs, booster seats and room for the pram",
+      "visit.p2":"Crayons and a colouring mat at every table",
+      "visit.p3":"Big tables for birthdays — just call ahead",
+      "cta.eyebrow":"Hungry already?","cta.h2":"We saved you<br>a seat",
+      "cta.pickup":"Order for pickup","cta.book":"Book a table",
+      "foot.legal":"© 2026 Butterbun & Co. — fictional brand.","foot.top":"Top",
+      "foot.note":"Demo site concept · built by Frans"
+    },
+    fi: {
+      "nav.menu":"Menu","nav.stack":"Näin se rakennetaan","nav.story":"Tarinamme","nav.visit":"Käy kylässä",
+      "cta.order":"Tilaa ennakkoon","cta.menu":"Kurkista menuun",
+      "hero.badge":"Perheyritys vuodesta 1998",
+      "hero.l1":"Vedä tuoli pöytään,","hero.l2":"kaikki mahtuvat",
+      "hero.sub":"Korttelin omat burgerit voideltuine sämpylöineen, värikynät joka pöydässä eikä kukaan laske toisia annoksia.",
+      "hero.alt":"Sarjakuvamainen kuva perheen pöydästä ylhäältä: burgereita, ranskalaiskoreja ja pirtelöitä ruudullisella liinalla",
+      "mq.1":"Sämpylät paistetaan joka aamu","mq.2":"Lapset syövät sunnuntaisin ilmaiseksi","mq.3":"Syöttötuolit ja värikynät valmiina","mq.4":"Pirtelöt vispataan käsin","mq.5":"Lisäkupilliset talon piikkiin",
+      "stack.eyebrow":"Näin se rakennetaan","stack.h2":"Kuusi iloista kerrosta",
+      "stack.crown":"Voideltu yläsämpylä","stack.lettuce":"Rapea salaatti","stack.tomato":"Puutarhan tomaatti","stack.cheese":"Sulava cheddar","stack.patty":"Talon oma pihvi","stack.heel":"Paahdettu, voideltu pohja",
+      "stack.p1":"Ei mitään monimutkaista, kunhan tehdään kunnolla. Sämpylät tulevat uunista seitsemältä, pihvit painetaan käsin ja juusto laitetaan ajoissa, jotta se ehtii sulaa reunoja myöten.",
+      "stack.p2":"Kerro mistä pienokaisesi pitää ja mistä ei, niin rakennamme koko annoksen mielellämme uusiksi. Ei suolakurkkua, tuplajuusto, halki leikattuna — mikään näistä ei ole ongelma.",
+      "stack.s1":"Perheyritys vuodesta","stack.s2":"Pöytää värikynineen","stack.s3":"Sämpylät uunista",
+      "stack.aria":"Kaavio Butterbunin talon burgerista: voideltu yläsämpylä, rapea salaatti, puutarhan tomaatti, sulava cheddar, talon pihvi, paahdettu pohjasämpylä",
+      "menu.eyebrow":"Taululla","menu.h2":"Menu",
+      "menu.note":"Jokaisen burgerin saa pienempänä, miedompana tai halki leikattuna. Kysy vain — teemme sitä sata kertaa päivässä.",
+      "menu.d1":"Arjen klassikkomme. Yksi käsin painettu pihvi, sulava cheddar, salaatti, tomaatti ja pehmeä voideltu sämpylä.","menu.t1":"Talon suosikki",
+      "menu.d2":"Kaksi pihviä, kaksi juustoviipaletta ja muutama pekoniviipale. Mukana ylimääräiset lautasliinat, ei tuomitsemista.","menu.t2":"Nälkäisille",
+      "menu.d3":"Rapea kirnupiimäkana hunajasinapilla ja parilla suolakurkulla. Mieto mausteiltaan, iso rapeudeltaan.","menu.t3":"Mieto ja rapea",
+      "menu.d4":"Tukeva kasvis-papupihvi avokadolla, iduilla ja tomaatilla. Raikas, värikäs ja kunnolla täyttävä.","menu.t4":"Kasvis",
+      "menu.d5":"Pieni burgeri pienille käsille, mukana hymyperunat. Ilmainen aikuisen annoksen kanssa sunnuntaisin.","menu.t5":"Pienille käsille",
+      "menu.d6":"Sämpylän tilalla pörröiset lettuset, paistettu kananmuna, pekonia ja tilkka vaahterasiirappia. Tarjolla puoleenpäivään.","menu.t6":"Viikonloppuaamut",
+      "menu.a1":"Sarjakuvapiirros klassisesta juustohampurilaisesta, jonka päällä sulaa voinokare",
+      "menu.a2":"Sarjakuvapiirros korkeasta tuplajuustohampurilaisesta pekonilla",
+      "menu.a3":"Sarjakuvapiirros rapeasta kanaburgerista hunajasinapilla",
+      "menu.a4":"Sarjakuvapiirros värikkäästä kasvisburgerista avokadolla ja iduilla",
+      "menu.a5":"Sarjakuvapiirros pikkuruisesta lasten juustohampurilaisesta ja pienistä perunapaloista",
+      "menu.a6":"Sarjakuvapiirros aamiaisburgerista, jossa sämpylänä lettuset ja päällä paistettu kananmuna",
+      "menu.sides":"Lisukkeet & pienet extrat","menu.shakes":"Pirtelöt",
+      "side.n1":"Kierreranskalaiset","side.d1":"mukana valkosipulidippi",
+      "side.n2":"Hymyperunat","side.d2":"ne joissa on naamat",
+      "side.n3":"Maissintähkä","side.d3":"voideltuna, grillistä",
+      "side.n4":"Mac & cheese -kuppi","side.d4":"uunissa, korppujauhokuorrutus",
+      "side.n5":"Omena- ja porkkanatikut","side.d5":"pienelle pöydälle",
+      "side.n6":"Puutarhasalaatti","side.d6":"sitruunaa ja oliiviöljyä",
+      "shake.n1":"Mansikkamaa","shake.d1":"oikeita marjoja, kermavaahtoa",
+      "shake.n2":"Vaniljapilvi","shake.d2":"niin paksu että lusikka pysyy",
+      "shake.n3":"Suklaamallas","shake.d3":"vanhaan hyvään tapaan",
+      "shake.n4":"Banaanisplit-pirtelö","shake.d4":"aina kaksi pilliä",
+      "story.eyebrow":"Tarinamme","story.h2":"Kaikki alkoi<br>keittiön pöydästä",
+      "story.lede":"Marta laittoi ruokaa täydelle talolle joka sunnuntai eikä päästänyt ketään nälkäisenä ovesta ulos. Listamme burgeri on suunnilleen hänen, lusikallinen sinne tai tänne.",
+      "story.p1":"Vuonna 1998 perhe avasi pienen salin Founders Yardille: kahdeksan pöytää ja hyvin äänekäs pirtelökone. Pöytiä on sittemmin neljä lisää. Kone on yhä äänekäs, ja sama reseptikortti on yhä teipattuna keittiön kaapin sisäpintaan.",
+      "story.quote":"Jokainen lähtee vähän täydempänä kuin tuli.",
+      "story.attr":"— Marta & Otto Kivi, toinen sukupolvi",
+      "story.caption":"Nurkkapöytä, useimpina sunnuntai-iltapäivinä",
+      "visit.eyebrow":"Poikkea käymään","visit.h2":"Aukioloajat & osoite",
+      "visit.monthu":"Ma – To","visit.fri":"Pe","visit.sat":"La","visit.sun":"Su",
+      "visit.sunh":"09:00 – 20:00 · lapset syövät ilmaiseksi",
+      "visit.brunch":"Lettuaamut","visit.brunchh":"La & su puoleenpäivään",
+      "visit.addr1":"48 Founders Yard, Old Market District","visit.addr2":"Demo City, DC 00048",
+      "visit.p1":"Syöttötuolit, korokkeet ja tilaa vaunuille",
+      "visit.p2":"Värikynät ja värityskartta joka pöydässä",
+      "visit.p3":"Isot pöydät synttäreille — soita etukäteen",
+      "cta.eyebrow":"Jokos on nälkä?","cta.h2":"Säästimme sinulle<br>paikan",
+      "cta.pickup":"Tilaa noudettavaksi","cta.book":"Varaa pöytä",
+      "foot.legal":"© 2026 Butterbun & Co. — kuvitteellinen brändi.","foot.top":"Ylös",
+      "foot.note":"Demosivukonsepti · toteutus Frans"
+    },
+    sv: {
+      "nav.menu":"Meny","nav.stack":"Så bygger vi den","nav.story":"Vår historia","nav.visit":"Hitta hit",
+      "cta.order":"Beställ i förväg","cta.menu":"Titta i menyn",
+      "hero.badge":"Familjeägt sedan 1998",
+      "hero.l1":"Dra fram en stol,","hero.l2":"alla får plats",
+      "hero.sub":"Kvartersburgare på smöriga rostade bröd, kritor på varje bord och påfyllningar som ingen räknar.",
+      "hero.alt":"Tecknad bild uppifrån av ett familjebord med burgare, korgar med pommes och milkshakes på en rutig duk",
+      "mq.1":"Bröden bakas varje morgon","mq.2":"Barn äter gratis på söndagar","mq.3":"Barnstolar & kritor står redo","mq.4":"Milkshakes vispas för hand","mq.5":"Påfyllning bjuder vi på",
+      "stack.eyebrow":"Så bygger vi den","stack.h2":"Sex glada lager",
+      "stack.crown":"Smörigt överbröd","stack.lettuce":"Krispig sallad","stack.tomato":"Tomat från trädgården","stack.cheese":"Smält cheddar","stack.patty":"Vår egen biff","stack.heel":"Rostad, smörad botten",
+      "stack.p1":"Inget krångligt, bara ordentligt gjort. Bröden kommer ur ugnen klockan sju, biffarna trycks för hand och osten läggs på tidigt så den hinner smälta ända ut i kanterna.",
+      "stack.p2":"Berätta vad din lilla gäst gillar och inte gillar, så bygger vi gärna om hela härligheten. Utan gurka, extra ost, delad på mitten — inget av det är ett problem.",
+      "stack.s1":"Familjeägt sedan","stack.s2":"Bås med kritor","stack.s3":"Bröden ur ugnen",
+      "stack.aria":"Diagram över Butterbuns husburgare: smörigt överbröd, krispig sallad, tomat, smält cheddar, husets biff, rostat underbröd",
+      "menu.eyebrow":"På tavlan","menu.h2":"Meny",
+      "menu.note":"Varje burgare kan göras mindre, mildare eller delad på mitten. Fråga bara — vi gör det hundra gånger om dagen.",
+      "menu.d1":"Vår vardagsklassiker. En handtryckt biff, smält cheddar, sallad, tomat och ett mjukt smörat bröd.","menu.t1":"Husets favorit",
+      "menu.d2":"Två biffar, två skivor ost och några remsor bacon. Serveras med extra servetter och noll pekpinnar.","menu.t2":"För de hungriga",
+      "menu.d3":"Krispig kärnmjölkskyckling med honungssenap och ett par picklesskivor. Mild i kryddningen, stor i krispet.","menu.t3":"Mild & krispig",
+      "menu.d4":"En rejäl grönsaks- och bönbiff med avokado, groddar och tomat. Fräsch, färgglad och ordentligt mättande.","menu.t4":"Vegetarisk",
+      "menu.d5":"En liten burgare i lagom storlek för små händer, med potatisgubbar vid sidan. Gratis till en vuxenrätt på söndagar.","menu.t5":"För små händer",
+      "menu.d6":"Fluffiga pannkakor i stället för bröd, ett stekt ägg, bacon och lite lönnsirap. Serveras till klockan tolv.","menu.t6":"Helgmorgnar",
+      "menu.a1":"Tecknad bild av en klassisk ostburgare med smör som smälter på brödet",
+      "menu.a2":"Tecknad bild av en hög dubbelostburgare med bacon",
+      "menu.a3":"Tecknad bild av en krispig kycklingburgare med honungssenap",
+      "menu.a4":"Tecknad bild av en färgglad vegetarisk burgare med avokado och groddar",
+      "menu.a5":"Tecknad bild av en pytteliten barnostburgare med små potatisbitar",
+      "menu.a6":"Tecknad bild av en frukostburgare med pannkakor som bröd och ett stekt ägg",
+      "menu.sides":"Tillbehör & småplock","menu.shakes":"Milkshakes",
+      "side.n1":"Curly fries","side.d1":"med en burk vitlöksdipp",
+      "side.n2":"Potatisgubbar","side.d2":"de med ansikten",
+      "side.n3":"Majskolv","side.d3":"smörad, från grillen",
+      "side.n4":"Mac & cheese-kopp","side.d4":"gratinerad med ströbröd",
+      "side.n5":"Äppel- och morotsstavar","side.d5":"till det lilla bordet",
+      "side.n6":"Trädgårdssallad","side.d6":"citron och olivolja",
+      "shake.n1":"Jordgubbslandet","shake.d1":"riktiga bär, grädde på toppen",
+      "shake.n2":"Vaniljmoln","shake.d2":"tjock nog för en sked",
+      "shake.n3":"Chokladmalt","shake.d3":"på gammalt vis",
+      "shake.n4":"Banana split-shake","shake.d4":"alltid två sugrör",
+      "story.eyebrow":"Vår historia","story.h2":"Allt började vid<br>ett köksbord",
+      "story.lede":"Marta lagade mat till ett fullsatt hus varje söndag och lät aldrig någon gå hungrig. Burgaren på vår meny är i stort sett hennes, plus minus en sked.",
+      "story.p1":"1998 öppnade familjen ett litet rum på Founders Yard med åtta bord och en mycket högljudd milkshakemaskin. Vi har lagt till fyra bord sedan dess. Maskinen låter fortfarande, och samma receptkort sitter kvar tejpat inuti köksskåpet.",
+      "story.quote":"Alla går härifrån lite mättare än de kom.",
+      "story.attr":"— Marta & Otto Kivi, andra generationen",
+      "story.caption":"Hörnbåset, de flesta söndagseftermiddagar",
+      "visit.eyebrow":"Kom förbi","visit.h2":"Öppettider & adress",
+      "visit.monthu":"Mån – Tors","visit.fri":"Fre","visit.sat":"Lör","visit.sun":"Sön",
+      "visit.sunh":"09:00 – 20:00 · barn äter gratis",
+      "visit.brunch":"Pannkaksmorgnar","visit.brunchh":"Lör & sön till kl 12",
+      "visit.addr1":"48 Founders Yard, Old Market District","visit.addr2":"Demo City, DC 00048",
+      "visit.p1":"Barnstolar, sittkuddar och plats för barnvagnen",
+      "visit.p2":"Kritor och en målarduk vid varje bord",
+      "visit.p3":"Stora bord för kalas — ring bara i förväg",
+      "cta.eyebrow":"Hungrig redan?","cta.h2":"Vi har sparat<br>en plats åt dig",
+      "cta.pickup":"Beställ för avhämtning","cta.book":"Boka bord",
+      "foot.legal":"© 2026 Butterbun & Co. — fiktivt varumärke.","foot.top":"Upp",
+      "foot.note":"Demokoncept · byggd av Frans"
+    }
+  };
+
+  function setLang(lang){
+    var dict = I18N[lang] || I18N.en;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var k = el.getAttribute('data-i18n');
+      if(dict[k] !== undefined) el.textContent = dict[k];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      var k = el.getAttribute('data-i18n-html');
+      if(dict[k] !== undefined) el.innerHTML = dict[k];
+    });
+    document.querySelectorAll('[data-i18n-alt]').forEach(function(el){
+      var k = el.getAttribute('data-i18n-alt');
+      if(dict[k] !== undefined) el.setAttribute('alt', dict[k]);
+    });
+    var diagram = document.getElementById('burger-diagram');
+    if(diagram && dict['stack.aria']) diagram.setAttribute('aria-label', dict['stack.aria']);
+    document.documentElement.setAttribute('lang', lang);
+    document.querySelectorAll('.lang-switch button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang));
+    });
+    try{ localStorage.setItem('butterbun-lang', lang); }catch(e){}
+  }
+
+  var initial = 'en';
+  try{
+    var saved = localStorage.getItem('butterbun-lang');
+    if(saved && I18N[saved]) initial = saved;
+    else{
+      var nav = (navigator.language || 'en').slice(0,2).toLowerCase();
+      if(I18N[nav]) initial = nav;
+    }
+  }catch(e){
+    var nl = (navigator.language || 'en').slice(0,2).toLowerCase();
+    if(I18N[nl]) initial = nl;
+  }
+  document.querySelectorAll('.lang-switch button').forEach(function(b){
+    b.addEventListener('click', function(){ setLang(b.getAttribute('data-lang')); });
+  });
+  setLang(initial);
+})();
+</script>
+
+</body>
+</html>
